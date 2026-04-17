@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;800&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-secondary-fixed": "#001550",
+                    "tertiary-fixed-dim": "#e6c364",
+                    "primary-fixed-dim": "#b4c6f4",
+                    "on-surface": "#041a3f",
+                    "surface-dim": "#ccdaff",
+                    "on-surface-variant": "#44464e",
+                    "on-primary-container": "#7687b2",
+                    "on-tertiary-container": "#4f3d00",
+                    "inverse-primary": "#b4c6f4",
+                    "surface": "#faf9ff",
+                    "inverse-surface": "#1d2f55",
+                    "on-error-container": "#93000a",
+                    "tertiary-fixed": "#ffe08f",
+                    "primary": "#00081e",
+                    "on-primary-fixed": "#041a3f",
+                    "surface-bright": "#faf9ff",
+                    "outline": "#75777f",
+                    "on-primary": "#ffffff",
+                    "on-tertiary": "#ffffff",
+                    "on-secondary": "#ffffff",
+                    "surface-tint": "#4c5e86",
+                    "primary-container": "#0a1f44",
+                    "background": "#faf9ff",
+                    "error-container": "#ffdad6",
+                    "secondary-fixed-dim": "#b6c4ff",
+                    "surface-container": "#e9edff",
+                    "secondary": "#0042c7",
+                    "inverse-on-surface": "#edf0ff",
+                    "on-background": "#041a3f",
+                    "surface-container-highest": "#d9e2ff",
+                    "surface-container-lowest": "#ffffff",
+                    "secondary-container": "#0056fd",
+                    "on-tertiary-fixed-variant": "#584400",
+                    "surface-container-high": "#e1e8ff",
+                    "tertiary-container": "#c8a74b",
+                    "tertiary": "#755b00",
+                    "on-primary-fixed-variant": "#34466d",
+                    "surface-container-low": "#f1f3ff",
+                    "on-error": "#ffffff",
+                    "on-secondary-container": "#e4e7ff",
+                    "surface-variant": "#d9e2ff",
+                    "error": "#ba1a1a",
+                    "secondary-fixed": "#dce1ff",
+                    "on-tertiary-fixed": "#241a00",
+                    "outline-variant": "#c5c6cf",
+                    "on-secondary-fixed-variant": "#003ab2",
+                    "primary-fixed": "#d9e2ff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "fontFamily": {
+                    "headline": ["Manrope"],
+                    "body": ["Inter"],
+                    "label": ["Inter"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body selection:bg-secondary selection:text-white">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-white/85 dark:bg-slate-950/85 backdrop-blur-md border-b border-slate-200/10 dark:border-slate-800/15 shadow-xl shadow-blue-900/5">
+<div class="flex justify-between items-center max-w-7xl mx-auto px-8 h-20">
+<a class="text-2xl font-black text-slate-950 dark:text-white tracking-tighter font-headline no-underline" href="../index.html">JKRS</a>
+<div class="hidden md:flex items-center space-x-8">
+<a class="text-blue-700 dark:text-blue-400 border-b-2 border-blue-700 pb-1 font-manrope font-bold tracking-tight text-sm" href="../services/code.html">IT Services</a>
+<a class="text-slate-600 dark:text-slate-400 hover:text-blue-600 transition-colors font-manrope font-bold tracking-tight text-sm" href="../solar_power/code.html">Solar Infrastructure</a>
+<a class="text-slate-600 dark:text-slate-400 hover:text-blue-600 transition-colors font-manrope font-bold tracking-tight text-sm" href="#">Projects</a>
+<a class="text-slate-600 dark:text-slate-400 hover:text-blue-600 transition-colors font-manrope font-bold tracking-tight text-sm" href="../about_us/code.html">About Us</a>
+<a class="text-slate-600 dark:text-slate-400 hover:text-blue-600 transition-colors font-manrope font-bold tracking-tight text-sm" href="../contact_us/code.html">Contact Us</a>
+</div>
+<div class="flex items-center space-x-6">
+<span class="text-slate-600 font-manrope font-bold tracking-tight text-sm">+971 4 000 0000</span>
+<button class="text-blue-700 dark:text-blue-500 font-manrope font-bold tracking-tight text-sm scale-95 active:scale-90 transition-transform">AR/EN</button>
+</div>
+</div>
+</nav>
+<!-- Hero Section with Breadcrumb -->
+<header class="relative pt-32 pb-20 overflow-hidden bg-primary text-white">
+<div class="absolute inset-0 opacity-20">
+<img class="w-full h-full object-cover" data-alt="Modern architectural interior of a high-tech server room with blue ambient lighting and glass panels reflecting futuristic server racks" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCCcIVdQu43m7M4TbF1kuAzkdEXxYkWyPYneabHtotAgw_McdAg9C6zW7fdmuD_YAwXR2GlqCXS_5XavKGA_ogpQ6Xp6Vqg1iDJNBlTx_hobqCHNSawa73DgLFTYBA4kfxxZJOmI-xGsOm0wkXhbI1_VwBh5WoPnRL0M8UkOi2BLMG7BzeUSvqRNxeRCv0ZN6cYdWG7tAGM0YJV9kvt6SMtg2ZfI-RyvXrZ_M5xR7bn8USX1ZVESEmqYtcj78bwCmUv-knN_L5xXk_v"/>
+</div>
+<div class="relative max-w-7xl mx-auto px-8">
+<nav class="flex mb-8 space-x-2 text-xs font-label uppercase tracking-widest text-primary-fixed-dim">
+<a class="hover:text-white transition-colors" href="#">Home</a>
+<span>/</span>
+<span class="text-white">Services</span>
+</nav>
+<h1 class="text-5xl md:text-7xl font-headline font-extrabold tracking-tighter mb-6 max-w-3xl">
+                Infrastructure for the <span class="text-secondary-fixed-dim">Sovereign Era.</span>
+</h1>
+<p class="text-lg md:text-xl text-primary-fixed-dim max-w-2xl font-light leading-relaxed">
+                Integrating high-performance Enterprise IT ecosystems with sustainable Solar Infrastructure to power Dubai's next generation of digital dominance.
+            </p>
+</div>
+</header>
+<main class="max-w-7xl mx-auto px-8 py-24">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-16">
+<!-- Main Content Area -->
+<div class="lg:col-span-8 space-y-24">
+<!-- Service Grid (2x3) -->
+<section id="services">
+<div class="mb-12">
+<h2 class="text-sm font-label font-bold uppercase tracking-[0.3em] text-secondary mb-4">Our Core Capabilities</h2>
+<div class="w-12 h-1 bg-tertiary"></div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<!-- Service 1 -->
+<div class="group p-8 bg-surface-container-low hover:bg-surface-container-lowest transition-all duration-500 border-l-4 border-transparent hover:border-secondary shadow-blue-900/5">
+<span class="material-symbols-outlined text-4xl text-secondary mb-6 block" data-icon="dns">dns</span>
+<h3 class="text-xl font-headline font-bold mb-4">Enterprise Cloud Architectures</h3>
+<p class="text-on-surface-variant text-sm leading-relaxed mb-6">Scalable hybrid cloud solutions designed for high-availability enterprise environments in the Middle East.</p>
+<a class="inline-flex items-center text-xs font-bold uppercase tracking-widest text-secondary group-hover:gap-2 transition-all" href="#">
+                                Learn More <span class="material-symbols-outlined text-sm" data-icon="arrow_forward">arrow_forward</span>
+</a>
+</div>
+<!-- Service 2 -->
+<div class="group p-8 bg-surface-container-low hover:bg-surface-container-lowest transition-all duration-500 border-l-4 border-transparent hover:border-secondary shadow-blue-900/5">
+<span class="material-symbols-outlined text-4xl text-secondary mb-6 block" data-icon="solar_power">solar_power</span>
+<h3 class="text-xl font-headline font-bold mb-4">Utility-Scale Solar Plants</h3>
+<p class="text-on-surface-variant text-sm leading-relaxed mb-6">End-to-end solar infrastructure development from site assessment to grid integration and maintenance.</p>
+<a class="inline-flex items-center text-xs font-bold uppercase tracking-widest text-secondary group-hover:gap-2 transition-all" href="#">
+                                Learn More <span class="material-symbols-outlined text-sm" data-icon="arrow_forward">arrow_forward</span>
+</a>
+</div>
+<!-- Service 3 -->
+<div class="group p-8 bg-surface-container-low hover:bg-surface-container-lowest transition-all duration-500 border-l-4 border-transparent hover:border-secondary shadow-blue-900/5">
+<span class="material-symbols-outlined text-4xl text-secondary mb-6 block" data-icon="shield_lock">shield_lock</span>
+<h3 class="text-xl font-headline font-bold mb-4">Cyber-Resilience Vaults</h3>
+<p class="text-on-surface-variant text-sm leading-relaxed mb-6">Advanced security protocols and physical infrastructure to protect mission-critical data assets.</p>
+<a class="inline-flex items-center text-xs font-bold uppercase tracking-widest text-secondary group-hover:gap-2 transition-all" href="#">
+                                Learn More <span class="material-symbols-outlined text-sm" data-icon="arrow_forward">arrow_forward</span>
+</a>
+</div>
+<!-- Service 4 -->
+<div class="group p-8 bg-surface-container-low hover:bg-surface-container-lowest transition-all duration-500 border-l-4 border-transparent hover:border-secondary shadow-blue-900/5">
+<span class="material-symbols-outlined text-4xl text-secondary mb-6 block" data-icon="monitoring">monitoring</span>
+<h3 class="text-xl font-headline font-bold mb-4">Smart Grid Analytics</h3>
+<p class="text-on-surface-variant text-sm leading-relaxed mb-6">AI-driven monitoring systems for real-time energy optimization across industrial solar arrays.</p>
+<a class="inline-flex items-center text-xs font-bold uppercase tracking-widest text-secondary group-hover:gap-2 transition-all" href="#">
+                                Learn More <span class="material-symbols-outlined text-sm" data-icon="arrow_forward">arrow_forward</span>
+</a>
+</div>
+<!-- Service 5 -->
+<div class="group p-8 bg-surface-container-low hover:bg-surface-container-lowest transition-all duration-500 border-l-4 border-transparent hover:border-secondary shadow-blue-900/5">
+<span class="material-symbols-outlined text-4xl text-secondary mb-6 block" data-icon="developer_board">developer_board</span>
+<h3 class="text-xl font-headline font-bold mb-4">Custom Hardware Integration</h3>
+<p class="text-on-surface-variant text-sm leading-relaxed mb-6">Bespoke server and networking hardware tailored to the unique thermal challenges of the UAE.</p>
+<a class="inline-flex items-center text-xs font-bold uppercase tracking-widest text-secondary group-hover:gap-2 transition-all" href="#">
+                                Learn More <span class="material-symbols-outlined text-sm" data-icon="arrow_forward">arrow_forward</span>
+</a>
+</div>
+<!-- Service 6 -->
+<div class="group p-8 bg-surface-container-low hover:bg-surface-container-lowest transition-all duration-500 border-l-4 border-transparent hover:border-secondary shadow-blue-900/5">
+<span class="material-symbols-outlined text-4xl text-secondary mb-6 block" data-icon="precision_manufacturing">precision_manufacturing</span>
+<h3 class="text-xl font-headline font-bold mb-4">Infrastructure Managed Services</h3>
+<p class="text-on-surface-variant text-sm leading-relaxed mb-6">24/7 technical oversight and preventative maintenance for IT and solar hardware lifecycles.</p>
+<a class="inline-flex items-center text-xs font-bold uppercase tracking-widest text-secondary group-hover:gap-2 transition-all" href="#">
+                                Learn More <span class="material-symbols-outlined text-sm" data-icon="arrow_forward">arrow_forward</span>
+</a>
+</div>
+</div>
+</section>
+<!-- Detail Section Structure -->
+<section class="space-y-16" id="details">
+<!-- Overview -->
+<div class="space-y-6">
+<h2 class="text-3xl font-headline font-extrabold tracking-tight">The JKRS Methodology</h2>
+<p class="text-on-surface-variant leading-relaxed">
+                            We don't just provide services; we engineer sovereignty. Our approach treats every IT server and every solar panel as a critical node in a larger, unified ecosystem. By bridging the gap between digital power and physical energy, JKRS provides the foundation upon which enterprises build their future legacy.
+                        </p>
+</div>
+<!-- Benefits -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+<div class="bg-surface-container-highest p-8 relative overflow-hidden">
+<div class="absolute top-0 right-0 w-32 h-32 bg-secondary opacity-5 -mr-16 -mt-16 rounded-full"></div>
+<h4 class="text-lg font-headline font-bold mb-4 text-primary">Unrivaled Reliability</h4>
+<ul class="space-y-3">
+<li class="flex items-start text-sm">
+<span class="material-symbols-outlined text-secondary mr-2 text-base" data-icon="check_circle">check_circle</span>
+                                    99.99% Uptime Guarantee on managed systems.
+                                </li>
+<li class="flex items-start text-sm">
+<span class="material-symbols-outlined text-secondary mr-2 text-base" data-icon="check_circle">check_circle</span>
+                                    Tier IV Data Center compliance standards.
+                                </li>
+</ul>
+</div>
+<div class="bg-surface-container-highest p-8 relative overflow-hidden">
+<div class="absolute top-0 right-0 w-32 h-32 bg-tertiary opacity-10 -mr-16 -mt-16 rounded-full"></div>
+<h4 class="text-lg font-headline font-bold mb-4 text-primary">Sustainable Power</h4>
+<ul class="space-y-3">
+<li class="flex items-start text-sm">
+<span class="material-symbols-outlined text-tertiary mr-2 text-base" data-icon="bolt">bolt</span>
+                                    Zero-Emission energy sourcing for IT loads.
+                                </li>
+<li class="flex items-start text-sm">
+<span class="material-symbols-outlined text-tertiary mr-2 text-base" data-icon="bolt">bolt</span>
+                                    Up to 40% reduction in long-term operational costs.
+                                </li>
+</ul>
+</div>
+</div>
+<!-- Numbered Process Steps -->
+<div class="space-y-12">
+<h3 class="text-xl font-headline font-bold uppercase tracking-widest text-primary">Execution Roadmap</h3>
+<div class="grid grid-cols-1 gap-4">
+<div class="flex items-center gap-8 group">
+<div class="flex-none w-16 h-16 bg-primary text-white flex items-center justify-center font-headline font-black text-2xl group-hover:bg-secondary transition-colors">01</div>
+<div class="border-b border-outline-variant/20 pb-4 w-full">
+<h5 class="font-bold mb-1">Deep-Audit Consultation</h5>
+<p class="text-sm text-on-surface-variant">We analyze your current digital and energy footprint to identify inefficiencies.</p>
+</div>
+</div>
+<div class="flex items-center gap-8 group">
+<div class="flex-none w-16 h-16 bg-primary text-white flex items-center justify-center font-headline font-black text-2xl group-hover:bg-secondary transition-colors">02</div>
+<div class="border-b border-outline-variant/20 pb-4 w-full">
+<h5 class="font-bold mb-1">Architectural Blueprinting</h5>
+<p class="text-sm text-on-surface-variant">Bespoke engineering of your unified IT and Solar infrastructure.</p>
+</div>
+</div>
+<div class="flex items-center gap-8 group">
+<div class="flex-none w-16 h-16 bg-primary text-white flex items-center justify-center font-headline font-black text-2xl group-hover:bg-secondary transition-colors">03</div>
+<div class="border-b border-outline-variant/20 pb-4 w-full">
+<h5 class="font-bold mb-1">Precision Deployment</h5>
+<p class="text-sm text-on-surface-variant">Professional installation by certified JKRS engineers with zero downtime.</p>
+</div>
+</div>
+<div class="flex items-center gap-8 group">
+<div class="flex-none w-16 h-16 bg-primary text-white flex items-center justify-center font-headline font-black text-2xl group-hover:bg-secondary transition-colors">04</div>
+<div class="border-b border-outline-variant/20 pb-4 w-full">
+<h5 class="font-bold mb-1">Vigilance &amp; Optimization</h5>
+<p class="text-sm text-on-surface-variant">Continuous 24/7 monitoring and performance tuning for peak efficiency.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Sticky Sidebar CTA -->
+<aside class="lg:col-span-4 relative">
+<div class="sticky top-28 space-y-8">
+<div class="bg-primary text-white p-8 border-t-4 border-tertiary shadow-2xl shadow-primary/20">
+<h3 class="text-2xl font-headline font-extrabold mb-4">Secure Your Infrastructure</h3>
+<p class="text-primary-fixed-dim text-sm leading-relaxed mb-8">
+                            Ready to modernize your enterprise with sustainable, high-performance tech? Contact our specialists today.
+                        </p>
+<form class="space-y-4">
+<div>
+<label class="block text-[10px] uppercase tracking-widest text-primary-fixed-dim mb-2 font-bold">Select Service</label>
+<select class="w-full bg-primary-container border-none text-white text-sm p-4 focus:ring-2 focus:ring-secondary transition-all">
+<option>Enterprise IT Services</option>
+<option>Solar Infrastructure</option>
+<option>Managed Support</option>
+</select>
+</div>
+<button class="w-full py-4 bg-secondary hover:bg-secondary-container text-white font-bold uppercase tracking-widest text-xs transition-all flex items-center justify-center gap-2" type="button">
+                                Get a Quote <span class="material-symbols-outlined text-sm" data-icon="send">send</span>
+</button>
+</form>
+</div>
+<div class="p-8 border-l-2 border-outline-variant/20 bg-surface-container-low">
+<p class="italic text-on-surface-variant text-sm leading-relaxed">
+                            "JKRS transformed our data operations, reducing our energy overhead by 35% within the first quarter."
+                        </p>
+<p class="mt-4 font-bold text-xs uppercase tracking-widest text-primary">— CTO, Burj Industrial</p>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- WhatsApp Floating Button -->
+<a class="fixed bottom-8 right-8 w-16 h-16 bg-[#25D366] text-white rounded-full flex items-center justify-center shadow-2xl hover:scale-110 active:scale-95 transition-all z-40 group" href="#">
+<span class="material-symbols-outlined text-3xl" data-icon="chat">chat</span>
+<span class="absolute right-full mr-4 px-4 py-2 bg-white text-on-surface text-xs font-bold whitespace-nowrap rounded-lg shadow-xl opacity-0 group-hover:opacity-100 transition-opacity">Expert Consultation</span>
+</a>
+<!-- Footer -->
+<footer class="bg-slate-950 dark:bg-black w-full pt-16 pb-8 border-t border-slate-800">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-12 max-w-7xl mx-auto px-8">
+<div class="space-y-6">
+<div class="text-xl font-bold text-white font-headline">JKRS</div>
+<p class="text-slate-400 font-manrope text-sm leading-relaxed">
+                    Engineering the backbone of Dubai's sustainable future through technology and clean energy.
+                </p>
+</div>
+<div>
+<h4 class="text-blue-500 font-bold mb-6 font-manrope text-sm">Services</h4>
+<div class="flex flex-col space-y-4">
+<a class="text-slate-400 hover:text-white font-manrope text-sm transition-transform hover:translate-x-1 duration-300" href="#">IT Infrastructure</a>
+<a class="text-slate-400 hover:text-white font-manrope text-sm transition-transform hover:translate-x-1 duration-300" href="#">Solar Solutions</a>
+<a class="text-slate-400 hover:text-white font-manrope text-sm transition-transform hover:translate-x-1 duration-300" href="#">Cyber Security</a>
+</div>
+</div>
+<div>
+<h4 class="text-blue-500 font-bold mb-6 font-manrope text-sm">Resources</h4>
+<div class="flex flex-col space-y-4">
+<a class="text-slate-400 hover:text-white font-manrope text-sm transition-transform hover:translate-x-1 duration-300" href="#">Expert Consultation</a>
+<a class="text-slate-400 hover:text-white font-manrope text-sm transition-transform hover:translate-x-1 duration-300" href="#">Solar Calculator</a>
+<a class="text-slate-400 hover:text-white font-manrope text-sm transition-transform hover:translate-x-1 duration-300" href="#">Case Studies</a>
+</div>
+</div>
+<div>
+<h4 class="text-blue-500 font-bold mb-6 font-manrope text-sm">Legal</h4>
+<div class="flex flex-col space-y-4">
+<a class="text-slate-400 hover:text-white font-manrope text-sm transition-transform hover:translate-x-1 duration-300" href="#">Privacy Policy</a>
+<a class="text-slate-400 hover:text-white font-manrope text-sm transition-transform hover:translate-x-1 duration-300" href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+<div class="max-w-7xl mx-auto px-8 mt-16 pt-8 border-t border-slate-800 text-center">
+<p class="text-slate-500 font-manrope text-xs">© 2024 JKRS Enterprise IT &amp; Solar. All Rights Reserved.</p>
+</div>
+</footer>
+</body></html>

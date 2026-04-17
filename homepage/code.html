@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>JKRS | Enterprise IT &amp; Solar Infrastructure Dubai</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&amp;family=Inter:wght@300..700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary-fixed": "#001550",
+                        "tertiary-fixed-dim": "#e6c364",
+                        "primary-fixed-dim": "#b4c6f4",
+                        "on-surface": "#041a3f",
+                        "surface-dim": "#ccdaff",
+                        "on-surface-variant": "#44464e",
+                        "on-primary-container": "#7687b2",
+                        "on-tertiary-container": "#4f3d00",
+                        "inverse-primary": "#b4c6f4",
+                        "surface": "#faf9ff",
+                        "inverse-surface": "#1d2f55",
+                        "on-error-container": "#93000a",
+                        "tertiary-fixed": "#ffe08f",
+                        "primary": "#00081e",
+                        "on-primary-fixed": "#041a3f",
+                        "surface-bright": "#faf9ff",
+                        "outline": "#75777f",
+                        "on-primary": "#ffffff",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "surface-tint": "#4c5e86",
+                        "primary-container": "#0a1f44",
+                        "background": "#faf9ff",
+                        "error-container": "#ffdad6",
+                        "secondary-fixed-dim": "#b6c4ff",
+                        "surface-container": "#e9edff",
+                        "secondary": "#0042c7",
+                        "inverse-on-surface": "#edf0ff",
+                        "on-background": "#041a3f",
+                        "surface-container-highest": "#d9e2ff",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary-container": "#0056fd",
+                        "on-tertiary-fixed-variant": "#584400",
+                        "surface-container-high": "#e1e8ff",
+                        "tertiary-container": "#c8a74b",
+                        "tertiary": "#755b00",
+                        "on-primary-fixed-variant": "#34466d",
+                        "surface-container-low": "#f1f3ff",
+                        "on-error": "#ffffff",
+                        "on-secondary-container": "#e4e7ff",
+                        "surface-variant": "#d9e2ff",
+                        "error": "#ba1a1a",
+                        "secondary-fixed": "#dce1ff",
+                        "on-tertiary-fixed": "#241a00",
+                        "outline-variant": "#c5c6cf",
+                        "on-secondary-fixed-variant": "#003ab2",
+                        "primary-fixed": "#d9e2ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "fontFamily": {
+                        "headline": ["Manrope"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        h1, h2, h3, h4 { font-family: 'Manrope', sans-serif; }
+        .glass-nav { backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+    </style>
+</head>
+<body class="bg-background text-on-surface selection:bg-secondary-fixed selection:text-on-secondary-fixed">
+<!-- Top Navigation -->
+<nav class="fixed top-0 w-full z-50 bg-white/85 dark:bg-slate-950/85 backdrop-blur-md border-b border-slate-200/10 dark:border-slate-800/15 shadow-xl shadow-blue-900/5">
+<div class="flex justify-between items-center max-w-7xl mx-auto px-8 h-20">
+<a class="text-2xl font-black text-slate-950 dark:text-white tracking-tighter no-underline" href="../index.html">JKRS</a>
+<div class="hidden md:flex items-center space-x-8 font-manrope font-bold tracking-tight text-sm">
+<a class="text-blue-700 dark:text-blue-400 border-b-2 border-blue-700 pb-1" href="../services/code.html">IT Services</a>
+<a class="text-slate-600 dark:text-slate-400 hover:text-blue-600 transition-colors" href="../solar_power/code.html">Solar Infrastructure</a>
+<a class="text-slate-600 dark:text-slate-400 hover:text-blue-600 transition-colors" href="#">Projects</a>
+<a class="text-slate-600 dark:text-slate-400 hover:text-blue-600 transition-colors" href="../about_us/code.html">About Us</a>
+<a class="text-slate-600 dark:text-slate-400 hover:text-blue-600 transition-colors" href="../contact_us/code.html">Contact Us</a>
+</div>
+<div class="flex items-center space-x-6">
+<a class="hidden lg:block font-manrope font-bold text-sm text-slate-600" href="tel:+97140000000">+971 4 000 0000</a>
+<button class="font-manrope font-bold text-sm px-4 py-2 bg-surface-container-low hover:bg-slate-50 transition-all rounded-lg">AR/EN</button>
+</div>
+</div>
+</nav>
+<!-- Hero Section -->
+<section class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden bg-primary overflow-hidden">
+<div class="absolute inset-0 opacity-20">
+<img class="w-full h-full object-cover" data-alt="cinematic wide shot of Dubai skyline at dusk with high-tech blue light glowing from skyscrapers and solar energy panels" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQLy0YXu05w6u8Tu1G2cU_SHOoixIL5W66V1o-MYDxV-JQ2ktrBk4dUmcDYWHn_ZQ8qoi6IlPnQQNY2mLSCZtL_oHPoPzLqeDQOJbG088gdCLhkTB1IKa6mCElS6adPnMwHBzLvx4-w-BMuNdpTBLosQT9AyvykK5KOTSogY_DtSqMNFMkEd-wDEJ4Y5l79h0IJGiE_IQQADzAH1X668_QpDKziAWXtkQ5ydCo09DTcQ-mkOiZ-VB0OAsercz-XmtInBHUu-dTzRLC"/>
+</div>
+<div class="absolute inset-0 bg-gradient-to-r from-primary via-primary/90 to-transparent"></div>
+<div class="relative max-w-7xl mx-auto px-8 grid lg:grid-cols-2 gap-12 items-center">
+<div class="space-y-8">
+<div class="inline-flex items-center px-3 py-1 bg-secondary/10 border border-secondary/20 text-secondary-fixed-dim rounded-full text-xs font-bold tracking-widest uppercase">
+                    Pioneering Digital Excellence
+                </div>
+<h1 class="text-5xl lg:text-7xl font-extrabold text-on-primary tracking-tighter leading-[1.1]">
+                    Dubai's Most Trusted <span class="text-secondary-fixed-dim">IT Partner</span> for 20+ Years
+                </h1>
+<p class="text-lg text-primary-fixed-dim max-w-lg leading-relaxed font-body">
+                    Empowering UAE enterprises with resilient IT infrastructure and sustainable solar solutions. We bridge the gap between legacy reliability and futuristic innovation.
+                </p>
+<div class="flex flex-wrap gap-4">
+<button class="px-8 py-4 bg-secondary text-on-secondary font-bold text-sm hover:translate-y-[-2px] transition-transform active:scale-95">
+                        Get a Free Consultation
+                    </button>
+<button class="px-8 py-4 border border-outline-variant/30 text-on-primary font-bold text-sm hover:bg-white/5 transition-colors">
+                        View Our Services
+                    </button>
+</div>
+</div>
+<!-- Hero Tech Card -->
+<div class="hidden lg:block">
+<div class="bg-primary-container/80 backdrop-blur-xl p-8 border border-outline-variant/10 shadow-2xl relative overflow-hidden group">
+<div class="absolute top-0 right-0 w-32 h-32 bg-secondary/20 blur-3xl -mr-16 -mt-16 group-hover:bg-secondary/40 transition-colors"></div>
+<div class="grid grid-cols-2 gap-8 relative z-10">
+<div class="space-y-2">
+<span class="text-4xl font-black text-on-primary">20+</span>
+<p class="text-xs uppercase tracking-widest text-primary-fixed-dim font-bold">Years Experience</p>
+</div>
+<div class="space-y-2">
+<span class="text-4xl font-black text-tertiary-fixed-dim">500+</span>
+<p class="text-xs uppercase tracking-widest text-primary-fixed-dim font-bold">Projects Delivered</p>
+</div>
+<div class="space-y-2">
+<span class="text-4xl font-black text-on-primary">99.9%</span>
+<p class="text-xs uppercase tracking-widest text-primary-fixed-dim font-bold">Uptime Guaranteed</p>
+</div>
+<div class="space-y-2">
+<span class="text-4xl font-black text-secondary-fixed-dim">24/7</span>
+<p class="text-xs uppercase tracking-widest text-primary-fixed-dim font-bold">Active Monitoring</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Trust Bar -->
+<div class="bg-surface-container-low py-12 border-y border-outline-variant/5">
+<div class="max-w-7xl mx-auto px-8 flex flex-wrap justify-between items-center gap-8 opacity-60">
+<div class="text-on-surface-variant font-black text-xl tracking-tighter">FORTUNE 500 PARTNERS</div>
+<img class="h-8 grayscale hover:grayscale-0 transition-all cursor-pointer" data-alt="logo of a global technology corporation in grayscale" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD8mlePM49oMaxQMNE0TKVgJIA32ToJN_PdQA5petKJcv-yg-FXderCVsIEivU6xGI9sjAR_fX6I31yrFSp1P91S9dI3jYeAC-3znYzhPgYq3LtI5OyuQRq2G_ErXgRckAYYF0j0XiUDPdWk0Z1cfX1GtdLP2NlW5Lo_uPxGXq4gTwfBC_CCuMxtOzlyERdfPQWKYlLWchE5AJ_sf_pjHRxWRJiCP5NRk1vqIgpzXtdesUVAPdpTzfR8sdZ-UOiPGXrg865CWjvwUNj"/>
+<img class="h-8 grayscale hover:grayscale-0 transition-all cursor-pointer" data-alt="logo of a sustainable energy company in grayscale" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA3lzPWiuo2IiTG5dLVz9WMSnZwNE-ugK-jjb80fpTcx7Efp5OnkOOa8mclptYHjRWWjQfCEBISRD07epq_FkQ4oASAm9adiYQI9BMAj-z7776ZdBdy3PwvZDZrPgK-As3lNCQ_HN_Lq7PHEJXUac0PF0Ia3TXYaNRyCr2lRpxxnV5gXHRnPQS2-7H8W8B-Qq7AszSdpapyS2VGO-9_2io8b4V8NUcisSq0Rwe0EtEGGy-JCJ9d3uL4TH2vxb7SgzQidfDTSCC9Qkzu"/>
+<img class="h-8 grayscale hover:grayscale-0 transition-all cursor-pointer" data-alt="logo of an international logistics firm in grayscale" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAph4V7YW_jR3MhY5G6hgkij6cc_49hDHRPeL5FwrbluITIY4y9yDhkXPWGn4n1ucZSinwampG5lFkvRNYIeyJGDg10JOqPighQRZCUlb3Qq2j1cKHMIuOlC1H2Fp3kwKFJELV-incVDYULZdl-xLO4nJbDzFmhrjEL2KYGWgohr9Nm6DL8xyeyOoK_caQ6Zkf-2Mta1uSiPA9YqhUGF9VqMsSO6IKNk0xbgQN5yul2gRUf41y94EHe-0P2-8380IqVvU63NPg1Ok2Q"/>
+<img class="h-8 grayscale hover:grayscale-0 transition-all cursor-pointer" data-alt="logo of a high-end cloud computing provider in grayscale" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC-ISxRWFpO7q_9vKcB5N1ZPYbWgZqdbT6RqfdeqRLyh8fiN-G-GLHRM2hyAabLqNazLDPvH3oVwElsyHGZ1jCxvJsimVEG5tXO_0qZtfvVqUoMpciXNLWdbOrg5FLyXIig-3Wneuy6IvwikzMP-2brlN8pL7JTI74DkqxHyDhTzyw6xvAS_rBj7fuWSIW8Uzc5NbIW-5flScgaUEJte8DkfliJZbvyLchc_BVlaQSMR7qEjCueh1uDmaGYW0QQg8QG_WpkFpike37G"/>
+</div>
+</div>
+<!-- Services Bento Grid -->
+<section class="py-24 bg-surface px-8">
+<div class="max-w-7xl mx-auto">
+<div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+<div class="max-w-xl">
+<h2 class="text-xs font-black tracking-widest text-secondary mb-4 uppercase">Our Expertise</h2>
+<p class="text-4xl lg:text-5xl font-extrabold text-on-surface tracking-tight">Enterprise Infrastructure Built for Scale</p>
+</div>
+<div class="text-on-surface-variant text-lg">Comprehensive technology ecosystems for the Middle East market.</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<!-- IT Infrastructure -->
+<div class="group relative bg-surface-container-lowest p-8 border border-outline-variant/10 hover:shadow-2xl transition-all duration-500 overflow-hidden md:col-span-2">
+<div class="relative z-10 flex flex-col h-full justify-between">
+<span class="material-symbols-outlined text-secondary text-5xl mb-6">settings_input_component</span>
+<div>
+<h3 class="text-2xl font-bold mb-4">IT Infrastructure</h3>
+<p class="text-on-surface-variant mb-6 max-w-md">End-to-end architectural design for data centers and on-premise systems that form the backbone of your digital operation.</p>
+<a class="inline-flex items-center text-secondary font-bold text-sm uppercase tracking-wider group-hover:gap-4 transition-all gap-2" href="#">Learn More <span class="material-symbols-outlined">arrow_right_alt</span></a>
+</div>
+</div>
+<img class="absolute top-0 right-0 h-full w-1/2 object-cover opacity-0 group-hover:opacity-10 transition-opacity" data-alt="modern data center with server racks illuminated by blue LED lights" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBOPx1vactUk3H-9Sv9QR4YRny6mjHEB62_whMi3VdhTmH8MkTRQhdGHcsERbY7GY8NGuqcWH6qWQMKj6ut1WAKlyRTjBK_DCxBokxAnO6D7IwrRcfSKRyJ50dcqf13BGoF5ywIwDRoAq2ACg7n3qwf7o3sdVhxLL3c-bSJZ5pDSOPrP88O3HYb34Ed6ifsXb0MT2aaEu1ZccIDkkxZgtAY1W9eE29ySzZObCv2eleITow1WfgMZbwK2RGazgiyUpnlLjm6AE1s8zqa"/>
+</div>
+<!-- Cybersecurity -->
+<div class="bg-primary text-on-primary p-8 border border-white/10 hover:translate-y-[-8px] transition-transform">
+<span class="material-symbols-outlined text-secondary-fixed-dim text-5xl mb-6" data-weight="fill">shield</span>
+<h3 class="text-2xl font-bold mb-4">Cybersecurity</h3>
+<p class="text-primary-fixed-dim text-sm leading-relaxed mb-8">Zero-trust architecture and 24/7 threat hunting to protect your critical business assets.</p>
+</div>
+<!-- Cloud -->
+<div class="bg-surface-container-low p-8 border border-outline-variant/10 hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant text-5xl mb-6">cloud_done</span>
+<h3 class="text-2xl font-bold mb-4">Cloud Migration</h3>
+<p class="text-on-surface-variant text-sm leading-relaxed mb-8">Seamless transition to hybrid and multi-cloud environments with optimized latency.</p>
+</div>
+<!-- Managed IT -->
+<div class="bg-surface-container-low p-8 border border-outline-variant/10 hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant text-5xl mb-6">support_agent</span>
+<h3 class="text-2xl font-bold mb-4">Managed IT</h3>
+<p class="text-on-surface-variant text-sm leading-relaxed mb-8">Outsourced CIO services and helpdesk support focused on proactive maintenance.</p>
+</div>
+<!-- Solar -->
+<div class="group relative bg-tertiary-container text-on-tertiary-container p-8 border border-outline-variant/10 overflow-hidden md:col-span-2">
+<div class="relative z-10">
+<span class="material-symbols-outlined text-4xl mb-6" data-weight="fill">solar_power</span>
+<h3 class="text-2xl font-bold mb-4">Solar Infrastructure</h3>
+<p class="mb-6 max-w-md">Sustainable energy solutions designed specifically for the extreme high-heat climate of the Middle East region.</p>
+<button class="px-6 py-3 bg-on-tertiary-container text-surface-container-lowest font-bold text-sm">Solar Calculator</button>
+</div>
+</div>
+<!-- Networking -->
+<div class="bg-surface-container-low p-8 border border-outline-variant/10 hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant text-5xl mb-6">router</span>
+<h3 class="text-2xl font-bold mb-4">Networking</h3>
+<p class="text-on-surface-variant text-sm leading-relaxed mb-8">High-speed SD-WAN and enterprise WiFi deployments for maximum connectivity.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Why Choose Us / Pillars -->
+<section class="py-24 bg-primary text-on-primary">
+<div class="max-w-7xl mx-auto px-8">
+<div class="grid lg:grid-cols-2 gap-20 items-center">
+<div class="space-y-8">
+<h2 class="text-4xl lg:text-5xl font-extrabold tracking-tight">Defining the Standard for Dubai Technology</h2>
+<p class="text-primary-fixed-dim text-lg leading-relaxed">We don't just provide services; we build long-term operational resilience for firms that cannot afford a second of downtime.</p>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-10">
+<div class="space-y-4">
+<div class="w-12 h-12 bg-secondary flex items-center justify-center">
+<span class="material-symbols-outlined text-on-secondary">history</span>
+</div>
+<h4 class="text-xl font-bold">20+ Years in UAE</h4>
+<p class="text-primary-fixed-dim text-sm">Deep local expertise and understanding of regional compliance and infrastructure.</p>
+</div>
+<div class="space-y-4">
+<div class="w-12 h-12 bg-secondary flex items-center justify-center">
+<span class="material-symbols-outlined text-on-secondary">headset_mic</span>
+</div>
+<h4 class="text-xl font-bold">24/7 Local Support</h4>
+<p class="text-primary-fixed-dim text-sm">No remote call centers. Our Dubai-based engineers are available around the clock.</p>
+</div>
+<div class="space-y-4">
+<div class="w-12 h-12 bg-secondary flex items-center justify-center">
+<span class="material-symbols-outlined text-on-secondary">groups</span>
+</div>
+<h4 class="text-xl font-bold">UAE Team</h4>
+<p class="text-primary-fixed-dim text-sm">Over 100+ full-time staff members stationed right here in the heart of the city.</p>
+</div>
+<div class="space-y-4">
+<div class="w-12 h-12 bg-secondary flex items-center justify-center">
+<span class="material-symbols-outlined text-on-secondary">verified</span>
+</div>
+<h4 class="text-xl font-bold">Certified Engineers</h4>
+<p class="text-primary-fixed-dim text-sm">Highest tier certifications from Cisco, Microsoft, AWS, and Tier-1 Solar brands.</p>
+</div>
+</div>
+</div>
+<div class="relative">
+<div class="aspect-square bg-secondary/10 absolute -inset-4 transform rotate-6 border border-white/10"></div>
+<img class="relative z-10 w-full h-full object-cover shadow-2xl" data-alt="diverse group of tech engineers in professional workwear discussing plans in a modern office overlooking Dubai" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDluhImBTcyJdRjRme0xEqzVj-9C1dy6ABEVAwIgEbkZRU0TdNsOo485zWVS9RUPz3W8691xbSW8L2K1Xxvk5BB8zMl292FxNZ-H9oBYI3nrL9s43lzuRwx34KwxlkisIFprUJYz0zXH60SVgNunSeuM5GN13dv3Yqa85Dcr1tIbADX7FYuS3QW_xghNMbBNIiRk5sPQNbEjdaqrlIwM6W8ZcvIbXKJEDNoR1OpOWzs5KNECHxKUeaqHtcM5i-F7PhlTlXim5Hf6U87"/>
+</div>
+</div>
+</div>
+</section>
+<!-- Case Studies -->
+<section class="py-24 bg-surface-container-low px-8">
+<div class="max-w-7xl mx-auto">
+<h2 class="text-3xl font-bold mb-12 text-center">Portfolio Highlights</h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<div class="group bg-surface-container-lowest overflow-hidden border border-outline-variant/10">
+<div class="h-64 overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" data-alt="construction site with high-tech sensors being installed on a futuristic building" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDtjxlL-O0XPYv-NWhIVBVPx_B7VY5zZYvMaCaN6yq8rp1pem0vj8LZu1XU7xDb1gSQhObrxiD8qWj2MwOlCDU7-JZ4yq1_5ccGC6h4xl-aghrcnReINSoQPPPJ_xZFhDT_6u9RnmRTsFnnTzsvotX-r2cMZliM88ivCvt4uSuA7_5gc-luCxYgDrZgYablHoQYq28XoqfUcBWIr58uoNbZwE796XPCGQvTSDlwxQY35S1h3WEndP_-0oHb49ACLX9STdXowZbLuAPJ"/>
+</div>
+<div class="p-8">
+<span class="text-xs font-bold text-secondary tracking-widest uppercase">Solar &amp; IT</span>
+<h3 class="text-xl font-bold mt-2 mb-4">Emirates Logistics Hub</h3>
+<p class="text-on-surface-variant text-sm mb-6">Fully integrated solar power system and networking for a 50,000 sqm warehouse.</p>
+<a class="text-secondary font-bold text-sm" href="#">View Case Study →</a>
+</div>
+</div>
+<div class="group bg-surface-container-lowest overflow-hidden border border-outline-variant/10">
+<div class="h-64 overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" data-alt="team of corporate professionals in a glass-walled meeting room using large digital touchscreens" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDJebZltIWtMyQnBQbpuVvDnWoJNXQRMFi2Snozgfr8d6RTgsztiTCego0eZG3_k6rz9PCvYe74w7IW7OH6UdO9j-A9JRmqIKPcVMirgimvDyy3_inS8tuME4fUMnP4cGK4YxnFdoNZGGy0u6FGQwAzQXNbhtiB9pV8YdTWe9vfPH6JFH-nAcTDYSnpoTzMvQ1Ws2c25C7LRchYrkHfb3bIfhrQnWJH8Ha6WnAW-8J_q0zxNYPAHhXH6m69jtG6kGXvhDC1AU1fJHJY"/>
+</div>
+<div class="p-8">
+<span class="text-xs font-bold text-secondary tracking-widest uppercase">Cybersecurity</span>
+<h3 class="text-xl font-bold mt-2 mb-4">Financial Sector Hardening</h3>
+<p class="text-on-surface-variant text-sm mb-6">Complete security overhaul for a leading Dubai investment firm during digital expansion.</p>
+<a class="text-secondary font-bold text-sm" href="#">View Case Study →</a>
+</div>
+</div>
+<div class="group bg-surface-container-lowest overflow-hidden border border-outline-variant/10">
+<div class="h-64 overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" data-alt="digital visualization of a global data network with glowing points over a map of Earth" src="https://lh3.googleusercontent.com/aida-public/AB6AXuACelNfX6Dqndke8zwK78S9sPvMzTYDmwGPg2HNJNRxSys3z348EumyuAmo0ql_iFreemUKHxk3hl-2z2eEilNLcIqEBrrzPaMgMlVQbIiWLspwNtzXhd9XJ77sHjZ3rgXw8VnCL_nWwC578Ovxzjhpg7YhYMYYp-h9dhlwqS-XCfheorGvMbmJK5gZIbfV8GiQEoVIn9ppsLAJbbBS8gEyqUpnPxMrxcY0kB3H5FxLVG7vrVhGQbZIOylZWBU8xpofbYgGwoGBsnGq"/>
+</div>
+<div class="p-8">
+<span class="text-xs font-bold text-secondary tracking-widest uppercase">Cloud Infrastructure</span>
+<h3 class="text-xl font-bold mt-2 mb-4">E-commerce Scalability</h3>
+<p class="text-on-surface-variant text-sm mb-6">Hybrid cloud deployment supporting 1M+ monthly transactions for a regional retailer.</p>
+<a class="text-secondary font-bold text-sm" href="#">View Case Study →</a>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Testimonials -->
+<section class="py-24 bg-surface px-8 overflow-hidden">
+<div class="max-w-7xl mx-auto relative">
+<div class="absolute -left-20 top-0 text-[10rem] font-black text-surface-container select-none leading-none opacity-50">"</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-12 relative z-10">
+<div class="bg-surface p-8 border-l-4 border-secondary">
+<p class="text-on-surface-variant italic mb-8 leading-relaxed text-lg">"JKRS didn't just sell us a solution; they built a partnership. Their response time during our server migration was exceptional."</p>
+<div>
+<p class="font-bold">Ahmed Al-Mansoori</p>
+<p class="text-xs text-on-surface-variant uppercase tracking-widest">CTO, Vertex Global</p>
+</div>
+</div>
+<div class="bg-surface p-8 border-l-4 border-secondary">
+<p class="text-on-surface-variant italic mb-8 leading-relaxed text-lg">"Our energy costs dropped by 40% after the JKRS solar implementation. The ROI has been faster than we ever expected."</p>
+<div>
+<p class="font-bold">Sarah Chen</p>
+<p class="text-xs text-on-surface-variant uppercase tracking-widest">Operations Director, SunBridge</p>
+</div>
+</div>
+<div class="bg-surface p-8 border-l-4 border-secondary">
+<p class="text-on-surface-variant italic mb-8 leading-relaxed text-lg">"The cybersecurity audit they performed saved us from a major breach. Professional, thorough, and highly technical."</p>
+<div>
+<p class="font-bold">David Roberts</p>
+<p class="text-xs text-on-surface-variant uppercase tracking-widest">IT Head, Regional Logistics</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- CTA Banner -->
+<section class="py-16 px-8">
+<div class="max-w-7xl mx-auto bg-primary relative overflow-hidden p-12 lg:p-20 group">
+<div class="absolute inset-0 bg-gradient-to-br from-secondary/40 to-transparent opacity-30 group-hover:opacity-50 transition-opacity"></div>
+<div class="relative z-10 flex flex-col lg:flex-row justify-between items-center gap-12">
+<div class="max-w-2xl text-center lg:text-left">
+<h2 class="text-4xl lg:text-5xl font-black text-on-primary mb-6 leading-tight">Ready to Transform Your Business IT?</h2>
+<p class="text-primary-fixed-dim text-lg">Book a technical session with our certified experts to audit your current infrastructure.</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-6 shrink-0">
+<button class="px-10 py-5 bg-tertiary-container text-on-tertiary-container font-black text-sm uppercase tracking-widest hover:scale-105 transition-transform active:scale-95 shadow-xl">
+                        Expert Consultation
+                    </button>
+<button class="px-10 py-5 border-2 border-white/20 text-on-primary font-black text-sm uppercase tracking-widest hover:bg-white/5 transition-colors">
+                        Contact Us
+                    </button>
+</div>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="bg-slate-950 dark:bg-black w-full pt-16 pb-8">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-12 max-w-7xl mx-auto px-8">
+<div class="space-y-6">
+<div class="text-xl font-bold text-white">JKRS</div>
+<p class="text-slate-400 font-manrope text-sm leading-relaxed">Pioneering sustainable IT and solar infrastructure solutions for a resilient Dubai future.</p>
+<div class="flex space-x-4">
+<span class="material-symbols-outlined text-slate-400 cursor-pointer hover:text-white">language</span>
+<span class="material-symbols-outlined text-slate-400 cursor-pointer hover:text-white">public</span>
+<span class="material-symbols-outlined text-slate-400 cursor-pointer hover:text-white">alternate_email</span>
+</div>
+</div>
+<div class="space-y-6">
+<h4 class="text-white font-bold text-sm uppercase tracking-widest">Solutions</h4>
+<ul class="space-y-4">
+<li><a class="text-slate-400 hover:text-white hover:translate-x-1 transition-transform duration-300 block text-sm" href="#">Enterprise IT</a></li>
+<li><a class="text-slate-400 hover:text-white hover:translate-x-1 transition-transform duration-300 block text-sm" href="#">Solar Infrastructure</a></li>
+<li><a class="text-slate-400 hover:text-white hover:translate-x-1 transition-transform duration-300 block text-sm" href="#">Managed Services</a></li>
+<li><a class="text-slate-400 hover:text-white hover:translate-x-1 transition-transform duration-300 block text-sm" href="#">Security Audit</a></li>
+</ul>
+</div>
+<div class="space-y-6">
+<h4 class="text-white font-bold text-sm uppercase tracking-widest">Company</h4>
+<ul class="space-y-4 font-manrope text-sm leading-relaxed">
+<li><a class="text-slate-400 hover:text-white hover:translate-x-1 transition-transform duration-300 block" href="#">Privacy Policy</a></li>
+<li><a class="text-slate-400 hover:text-white hover:translate-x-1 transition-transform duration-300 block" href="#">Terms of Service</a></li>
+<li><a class="text-slate-400 hover:text-white hover:translate-x-1 transition-transform duration-300 block" href="#">Expert Consultation</a></li>
+<li><a class="text-slate-400 hover:text-white hover:translate-x-1 transition-transform duration-300 block" href="#">Solar Calculator</a></li>
+</ul>
+</div>
+<div class="space-y-6">
+<h4 class="text-white font-bold text-sm uppercase tracking-widest">Connect</h4>
+<p class="text-slate-400 text-sm">Business Bay, Executive Towers, Dubai, UAE</p>
+<p class="text-blue-500 dark:text-blue-400 font-bold">+971 4 000 0000</p>
+<div class="pt-4">
+<p class="text-yellow-500 font-semibold text-xs uppercase tracking-widest">Best-In-Class 2024</p>
+</div>
+</div>
+</div>
+<div class="max-w-7xl mx-auto px-8 mt-16 pt-8 border-t border-slate-800/50">
+<p class="text-slate-500 text-xs text-center md:text-left">© 2024 JKRS Enterprise IT &amp; Solar. All Rights Reserved.</p>
+</div>
+</footer>
+<!-- Floating WhatsApp Button -->
+<a class="fixed bottom-8 right-8 z-50 w-16 h-16 bg-secondary flex items-center justify-center rounded-full shadow-[0_20_40_rgba(4,26,63,0.2)] hover:scale-110 active:scale-95 transition-transform group" href="#">
+<div class="absolute inset-0 rounded-full bg-secondary-container opacity-20 animate-ping"></div>
+<span class="material-symbols-outlined text-white text-3xl" data-weight="fill">chat</span>
+</a>
+</body></html>
