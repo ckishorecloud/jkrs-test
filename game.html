@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Team Score Tracker</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#0e0f13; --surface:#16181f; --surface2:#1e2029; --border:#2a2d3a;
+    --accent:#c8f060; --accent2:#60c8f0; --danger:#f06060;
+    --text:#eef0f5; --muted:#6b7080; --lead:#c8f060; --elim:#f06060;
+    --rejoin:#b060f0; --gold:#ffd700; --silver:#c0c8d8; --bronze:#e8955a;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Syne',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding:2rem 1rem}
+  body::before{content:'';position:fixed;top:-200px;left:-200px;width:600px;height:600px;
+    background:radial-gradient(circle,rgba(200,240,96,.06) 0%,transparent 70%);pointer-events:none}
+  .wrap{max-width:720px;margin:0 auto}
+  h1{font-size:28px;font-weight:800;letter-spacing:-1px;text-align:center;margin-bottom:2rem;
+    background:linear-gradient(135deg,var(--accent),var(--accent2));
+    -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+  .section{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:1.5rem;margin-bottom:1rem}
+  h2{font-size:17px;font-weight:700;margin-bottom:1.25rem;letter-spacing:-.3px}
+  h3{font-size:12px;font-weight:600;margin-bottom:1rem;letter-spacing:.8px;text-transform:uppercase;color:var(--muted)}
+  label{font-size:12px;color:var(--muted);display:block;margin-bottom:5px;letter-spacing:.3px}
+  select,input[type="number"],input[type="text"]{
+    width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:10px;
+    font-size:14px;font-family:'Syne',sans-serif;background:var(--surface2);color:var(--text);
+    outline:none;transition:border-color .2s;appearance:none;-webkit-appearance:none}
+  select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236b7080' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+    background-repeat:no-repeat;background-position:right 12px center;padding-right:32px}
+  select option{background:var(--surface2)}
+  select:focus,input:focus{border-color:var(--accent)}
+  button{padding:9px 18px;border:1px solid var(--border);border-radius:10px;background:var(--surface2);
+    color:var(--text);font-size:13px;font-family:'Syne',sans-serif;font-weight:600;cursor:pointer;
+    transition:all .15s;letter-spacing:.2px}
+  button:hover{border-color:var(--accent);color:var(--accent)}
+  button:active{transform:scale(.97)}
+  .btn-primary{background:var(--accent);color:#0e0f13;border-color:var(--accent);font-weight:700}
+  .btn-primary:hover{background:#d8ff70;border-color:#d8ff70;color:#0e0f13}
+  .btn-danger{border-color:var(--danger);color:var(--danger)}
+  .btn-danger:hover{background:rgba(240,96,96,.1)}
+  .btn-warn{border-color:#f0b060;color:#f0b060}
+  .btn-warn:hover{background:rgba(240,176,96,.1)}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .divider{border:none;border-top:1px solid var(--border);margin:1rem 0}
+
+  /* Player pool */
+  .player-pool{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:1rem}
+  .player-tag{display:flex;align-items:center;gap:6px;padding:6px 14px;border-radius:20px;
+    border:1px solid var(--border);background:var(--surface2);font-size:13px;font-weight:600;
+    cursor:pointer;transition:all .15s;user-select:none;position:relative}
+  .player-tag:hover{border-color:var(--accent2);color:var(--accent2)}
+  .player-tag.selected{background:var(--accent);color:#0e0f13;border-color:var(--accent)}
+  .player-tag .delete-btn{display:none;position:absolute;top:-6px;right:-6px;width:16px;height:16px;
+    border-radius:50%;background:var(--danger);color:#fff;font-size:10px;align-items:center;
+    justify-content:center;border:none;padding:0;cursor:pointer;font-weight:700;z-index:1;transition:transform .15s}
+  .player-tag:hover .delete-btn,.player-tag.selected:hover .delete-btn{display:flex}
+  .player-tag .delete-btn:hover{transform:scale(1.2)}
+  .selected-count{font-size:12px;color:var(--muted);margin-bottom:.75rem;font-family:'DM Mono',monospace}
+  .select-all-row{display:flex;gap:8px;margin-bottom:.75rem}
+  .add-player-row{display:flex;gap:8px;margin-top:.5rem}
+  .add-player-row input{flex:1}
+  .add-player-row button{white-space:nowrap;flex-shrink:0}
+
+  /* Round inputs */
+  .round-input-row{display:grid;gap:10px;margin-bottom:14px}
+  .round-cell{display:flex;flex-direction:column;gap:5px}
+  .round-cell label{font-size:12px;color:var(--muted);font-family:'DM Mono',monospace;letter-spacing:0;text-transform:none}
+  .round-cell input{font-family:'DM Mono',monospace;font-size:16px;text-align:center}
+
+  /* Scoreboard */
+  .score-cards{display:grid;gap:10px}
+  .score-card{background:var(--surface2);border:1px solid var(--border);border-radius:12px;
+    padding:12px 16px;transition:opacity .3s,border-color .3s,box-shadow .3s;position:relative}
+  .score-card.lead    {border-color:var(--lead);  box-shadow:0 0 20px rgba(200,240,96,.12)}
+  .score-card.elim-card-style{opacity:.32;filter:grayscale(.8)}
+  .score-card.rejoined{border-color:var(--rejoin);box-shadow:0 0 18px rgba(176,96,240,.18);opacity:1!important;filter:none!important}
+  .score-card.pos-1st {border-color:var(--gold);  box-shadow:0 0 26px rgba(255,215,0,.25); opacity:1!important;filter:none!important}
+  .score-card.pos-2nd {border-color:var(--silver);box-shadow:0 0 20px rgba(192,200,216,.2);opacity:1!important;filter:none!important}
+  .score-card.pos-3rd {border-color:var(--bronze);box-shadow:0 0 20px rgba(232,149,90,.2); opacity:1!important;filter:none!important}
+  .sc-rank {font-size:10px;color:var(--muted);font-family:'DM Mono',monospace;margin-bottom:2px}
+  .sc-name {font-size:14px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .sc-score{font-size:26px;font-weight:800;font-family:'DM Mono',monospace;margin:4px 0;letter-spacing:-1px}
+  .sc-progress{height:3px;background:var(--border);border-radius:2px;margin-top:8px;overflow:hidden}
+  .sc-bar{height:100%;border-radius:2px;transition:width .5s ease}
+  .pos-ribbon{position:absolute;top:8px;right:10px;font-size:18px;line-height:1}
+  .badge{display:inline-flex;align-items:center;font-size:10px;padding:2px 8px;border-radius:20px;font-weight:700;letter-spacing:.4px;margin-right:3px}
+  .badge-lead  {background:rgba(200,240,96,.15);color:var(--lead);  border:1px solid rgba(200,240,96,.3)}
+  .badge-elim  {background:rgba(240,96,96,.12); color:var(--elim);  border:1px solid rgba(240,96,96,.25)}
+  .badge-rejoin{background:rgba(176,96,240,.15);color:var(--rejoin);border:1px solid rgba(176,96,240,.3)}
+  .badge-1st   {background:rgba(255,215,0,.15); color:var(--gold);  border:1px solid rgba(255,215,0,.4)}
+  .badge-2nd   {background:rgba(192,200,216,.12);color:var(--silver);border:1px solid rgba(192,200,216,.35)}
+  .badge-3rd   {background:rgba(232,149,90,.13);color:var(--bronze);border:1px solid rgba(232,149,90,.35)}
+
+  /* Rule note */
+  .rule-note{font-size:12px;color:var(--muted);background:rgba(96,200,240,.07);
+    border:1px solid rgba(96,200,240,.2);border-radius:8px;padding:9px 13px;margin-bottom:1.25rem;line-height:1.6}
+  .rule-note strong{color:var(--accent2)}
+
+  /* Eliminated / Rejoin panel */
+  #elim-section{display:none}
+  .elim-panel{background:var(--surface);border:1px solid rgba(176,96,240,.28);border-radius:16px;padding:1.5rem;margin-bottom:1rem}
+  .elim-panel h3{color:var(--rejoin);margin-bottom:.5rem}
+  .elim-panel .panel-note{font-size:11px;color:var(--muted);margin-bottom:1rem;font-family:'DM Mono',monospace}
+  .elim-cards{display:flex;flex-wrap:wrap;gap:10px}
+  .elim-card{background:var(--surface2);border:1px solid rgba(176,96,240,.22);border-radius:12px;
+    padding:11px 14px;display:flex;flex-direction:column;gap:7px;min-width:130px}
+  .elim-card .ec-name        {font-size:13px;font-weight:700}
+  .elim-card .ec-score       {font-size:11px;color:var(--muted);font-family:'DM Mono',monospace}
+  .elim-card .ec-rejoin-score{font-size:12px;color:var(--rejoin);font-family:'DM Mono',monospace;font-weight:600}
+  .rejoin-btn{font-size:11px;padding:6px 10px;border-radius:8px;border:1px solid var(--rejoin);
+    color:var(--rejoin);background:rgba(176,96,240,.1);cursor:pointer;font-family:'Syne',sans-serif;
+    font-weight:700;transition:all .15s;text-align:center}
+  .rejoin-btn:hover{background:rgba(176,96,240,.26);transform:scale(1.04)}
+  .rejoin-btn:active{transform:scale(.97)}
+
+  /* Podium banner */
+  .podium-section{background:linear-gradient(135deg,rgba(255,215,0,.06),rgba(96,200,240,.04));
+    border:1px solid rgba(255,215,0,.3);border-radius:16px;padding:2rem 1.5rem;text-align:center;margin-bottom:1rem}
+  .podium-title{font-size:13px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:1.5rem}
+  .podium-row{display:flex;justify-content:center;align-items:flex-end;gap:12px;margin-bottom:1.5rem}
+  .podium-card{display:flex;flex-direction:column;align-items:center;gap:6px;border-radius:14px;padding:14px 16px;min-width:100px}
+  .podium-card.p1{background:linear-gradient(160deg,rgba(255,215,0,.14),rgba(255,200,0,.06));
+    border:1px solid rgba(255,215,0,.5);transform:translateY(-18px)}
+  .podium-card.p2{background:linear-gradient(160deg,rgba(192,200,216,.12),rgba(192,200,216,.05));
+    border:1px solid rgba(192,200,216,.4);transform:translateY(-6px)}
+  .podium-card.p3{background:linear-gradient(160deg,rgba(232,149,90,.12),rgba(232,149,90,.05));
+    border:1px solid rgba(232,149,90,.4)}
+  .podium-medal{font-size:34px;line-height:1}
+  .podium-pos  {font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase}
+  .podium-card.p1 .podium-pos{color:var(--gold)}
+  .podium-card.p2 .podium-pos{color:var(--silver)}
+  .podium-card.p3 .podium-pos{color:var(--bronze)}
+  .podium-name {font-size:15px;font-weight:800}
+  .podium-score{font-size:12px;font-family:'DM Mono',monospace;color:var(--muted)}
+  .podium-rest {margin-top:.5rem}
+  .podium-rest-title{font-size:11px;color:var(--muted);letter-spacing:.5px;text-transform:uppercase;margin-bottom:.5rem}
+  .podium-rest-list{display:flex;flex-wrap:wrap;justify-content:center;gap:6px}
+  .podium-rest-item{font-size:12px;font-family:'DM Mono',monospace;color:var(--muted);padding:3px 10px;border:1px solid var(--border);border-radius:20px}
+
+  /* Log */
+  .log-row{font-size:12px;color:var(--muted);padding:6px 0;border-bottom:1px solid var(--border);font-family:'DM Mono',monospace;line-height:1.7}
+
+  /* Top bar */
+  .top-bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;flex-wrap:wrap;gap:8px}
+  .top-bar span{font-size:13px;color:var(--muted);font-family:'DM Mono',monospace}
+  .top-bar strong{color:var(--text)}
+  #setup,#game{display:none}
+
+  /* History */
+  .history-card{background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:12px 16px;margin-bottom:8px;cursor:pointer;transition:border-color .2s}
+  .history-card:hover{border-color:var(--accent2)}
+  .history-card .hc-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
+  .history-card .hc-winner{font-size:14px;font-weight:700;color:var(--gold)}
+  .history-card .hc-date{font-size:11px;color:var(--muted);font-family:'DM Mono',monospace}
+  .history-card .hc-meta{font-size:12px;color:var(--muted);font-family:'DM Mono',monospace}
+  .history-detail{display:none;margin-top:10px;border-top:1px solid var(--border);padding-top:10px}
+  .history-detail.open{display:block}
+  .history-podium{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px}
+  .history-podium-item{font-size:12px;font-family:'DM Mono',monospace;padding:4px 10px;border-radius:8px;font-weight:600}
+  .hp1{background:rgba(255,215,0,.12);color:var(--gold);border:1px solid rgba(255,215,0,.3)}
+  .hp2{background:rgba(192,200,216,.1);color:var(--silver);border:1px solid rgba(192,200,216,.3)}
+  .hp3{background:rgba(232,149,90,.1);color:var(--bronze);border:1px solid rgba(232,149,90,.3)}
+  .history-scores-title{font-size:11px;color:var(--muted);margin-bottom:5px;font-family:'DM Mono',monospace}
+  .hd-scores{display:flex;flex-wrap:wrap;gap:6px}
+  .hd-score-item{font-size:12px;font-family:'DM Mono',monospace;color:var(--muted);padding:3px 8px;border:1px solid var(--border);border-radius:6px}
+
+  /* Toast */
+  .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);
+    background:var(--surface);border:1px solid var(--border);border-radius:10px;
+    padding:10px 20px;font-size:13px;font-family:'DM Mono',monospace;color:var(--text);
+    z-index:9999;transition:transform .3s ease,opacity .3s ease;opacity:0;pointer-events:none;white-space:nowrap}
+  .toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+
+  /* Modal */
+  .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:1000;align-items:center;justify-content:center}
+  .modal-overlay.open{display:flex}
+  .modal{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:1.75rem;width:90%;max-width:360px;max-height:85vh;overflow-y:auto}
+  .modal h2{margin-bottom:1rem;font-size:16px}
+  .score-edit-grid{display:grid;gap:10px;margin-bottom:1.25rem}
+  .score-edit-row{display:grid;grid-template-columns:1fr auto;align-items:center;gap:8px}
+  .score-edit-row label{font-size:13px;color:var(--text);font-weight:600}
+  .score-edit-row input{width:90px;text-align:center;font-family:'DM Mono',monospace}
+  .modal-actions{display:flex;gap:8px}
+  .modal-actions button{flex:1}
+
+  /* Nav tabs */
+  .nav-tabs{display:flex;gap:6px;margin-bottom:1.25rem}
+  .nav-tab{padding:7px 16px;border-radius:8px;border:1px solid var(--border);background:transparent;
+    color:var(--muted);font-size:13px;cursor:pointer;font-family:'Syne',sans-serif;font-weight:600;transition:all .15s}
+  .nav-tab.active{background:var(--accent);color:#0e0f13;border-color:var(--accent)}
+  .nav-tab:hover:not(.active){border-color:var(--accent2);color:var(--accent2)}
+  .tab-panel{display:none}
+  .tab-panel.active{display:block}
+  #undo-btn{font-size:12px;padding:6px 14px}
+  #undo-btn:disabled{opacity:.35;cursor:not-allowed;pointer-events:none}
+
+  @media(max-width:480px){
+    .grid2{grid-template-columns:1fr}
+    .top-bar{flex-direction:column;align-items:flex-start}
+    .podium-row{gap:8px}
+    .podium-card{min-width:80px;padding:10px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Team Score Tracker</h1>
+
+  <div class="nav-tabs">
+    <button class="nav-tab active" onclick="showTab('tab-play',this)">🎮 Play</button>
+    <button class="nav-tab" onclick="showTab('tab-history',this)">📋 History</button>
+  </div>
+
+  <!-- PLAY TAB -->
+  <div id="tab-play" class="tab-panel active">
+
+    <!-- Setup -->
+    <div id="setup">
+      <div class="section">
+        <h2>Game Setup</h2>
+        <div class="rule-note">
+          <strong>★ Lowest score leads.</strong> Accumulate points each round — reach the target and you're eliminated.
+          The player with the lowest score at the end wins 🥇!<br>
+          <strong style="color:var(--rejoin)">↩ Rejoin rule:</strong> Eliminated players can rejoin at highest active score + 1.
+        </div>
+        <div class="grid2" style="margin-bottom:1.25rem">
+          <div>
+            <label>Target score (eliminated on reach)</label>
+            <select id="target">
+              <option value="100">100</option>
+              <option value="150" selected>150</option>
+              <option value="200">200</option>
+              <option value="custom">Custom...</option>
+            </select>
+          </div>
+          <div id="custom-wrap" style="display:none">
+            <label>Custom target</label>
+            <input type="number" id="custom-target" min="10" max="9999" value="200">
+          </div>
+        </div>
+        <hr class="divider">
+        <h3>Select Players</h3>
+        <div class="selected-count" id="sel-count">0 players selected (min 2)</div>
+        <div class="select-all-row">
+          <button onclick="selectAll()" style="font-size:12px;padding:5px 12px">Select All</button>
+          <button onclick="clearAll()" class="btn-danger" style="font-size:12px;padding:5px 12px">Clear All</button>
+        </div>
+        <div class="player-pool" id="player-pool"></div>
+        <hr class="divider">
+        <h3>Add New Player</h3>
+        <div class="add-player-row">
+          <input type="text" id="new-player-input" placeholder="Enter player name..." maxlength="30"
+            onkeydown="if(event.key==='Enter') addNewPlayer()">
+          <button class="btn-primary" onclick="addNewPlayer()" style="padding:9px 16px">+ Add</button>
+        </div>
+      </div>
+      <button class="btn-primary" onclick="startGame()" style="width:100%;padding:13px;font-size:15px;border-radius:12px">Start Game →</button>
+    </div>
+
+    <!-- Active game -->
+    <div id="game">
+      <div class="top-bar">
+        <span>Round <strong id="round-num">1</strong> &nbsp;·&nbsp; Target: <strong id="target-display">150</strong></span>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button id="undo-btn" class="btn-warn" onclick="undoRound()" disabled>↩ Undo</button>
+          <button class="btn-warn" onclick="openEditModal()" style="font-size:12px;padding:6px 14px">✏️ Edit</button>
+          <button onclick="resetGame()" style="font-size:12px;padding:6px 14px">↩ New game</button>
+        </div>
+      </div>
+
+      <!-- Podium banner (game over) -->
+      <div id="winner-section" style="display:none" class="podium-section">
+        <div class="podium-title">🏆 Final Standings</div>
+        <div class="podium-row" id="podium-row"></div>
+        <div class="podium-rest" id="podium-rest"></div>
+        <button class="btn-primary" onclick="resetGame()" style="margin-top:1.5rem;padding:10px 28px">Play Again</button>
+      </div>
+
+      <!-- Scoreboard -->
+      <div class="section">
+        <h3>Scoreboard — lowest score leads ↑</h3>
+        <div id="score-cards" class="score-cards"></div>
+      </div>
+
+      <!-- Eliminated / Rejoin panel -->
+      <div id="elim-section" class="elim-panel">
+        <h3>💀 Eliminated Players</h3>
+        <p class="panel-note">Tap ↩ Rejoin to re-enter at highest active score + 1 pt</p>
+        <div class="elim-cards" id="elim-cards"></div>
+      </div>
+
+      <!-- Round inputs -->
+      <div id="round-section" class="section">
+        <h3>Enter Round Scores</h3>
+        <div id="round-inputs" class="round-input-row"></div>
+        <button class="btn-primary" onclick="submitRound()" style="width:100%;padding:11px;border-radius:10px">Submit Round ✓</button>
+      </div>
+
+      <!-- Log -->
+      <div class="section">
+        <h3>Round Log</h3>
+        <div id="log" style="max-height:220px;overflow-y:auto"></div>
+      </div>
+    </div>
+
+  </div><!-- /tab-play -->
+
+  <!-- HISTORY TAB -->
+  <div id="tab-history" class="tab-panel">
+    <div class="section">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem">
+        <h2 style="margin-bottom:0">Past Games</h2>
+        <button class="btn-danger" onclick="clearHistory()" style="font-size:12px;padding:5px 12px">Clear All</button>
+      </div>
+      <div id="history-list"><p style="color:var(--muted);font-size:13px">No completed games yet.</p></div>
+    </div>
+  </div>
+
+</div><!-- /wrap -->
+
+<!-- Edit Modal -->
+<div class="modal-overlay" id="edit-modal">
+  <div class="modal">
+    <h2>✏️ Edit Scores</h2>
+    <div class="score-edit-grid" id="edit-grid"></div>
+    <div class="modal-actions">
+      <button onclick="closeEditModal()" class="btn-danger">Cancel</button>
+      <button onclick="saveEditModal()" class="btn-primary">Save Changes</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ── Default players ──────────────────────────────────────────────────────────
+const DEFAULT_PLAYERS = [
+  'Chandra','Sandhya','Pavan','Swathi','Hari','Monica','Balu','Radha',
+  'Vivek','Kalpana','Sandra','Kundhana','Abhi','SreeBodha','Jay','Ranveeth',
+  'Yashu','Diya','Kushi'
+];
+
+// ── Game state ───────────────────────────────────────────────────────────────
+let playerList   = [];
+let selected     = new Set();
+let teams        = [];
+let target       = 150;
+let round        = 1;
+let eliminated   = new Set();   // players currently out (cannot play this round)
+let rejoined     = new Set();   // players who came back (for badge display)
+let scores       = {};
+let log          = [];
+let history      = [];
+let roundHistory = [];          // undo stack — each entry is a full snapshot
+
+// elimOrder: ordered list of players as they were knocked out.
+// elimOrder[0] = first player knocked out (= WORST / last place).
+// elimOrder[last] = last player knocked out (= best loser, just below survivors).
+// This is SEPARATE from podium — it is only used during the game, NOT displayed.
+let elimOrder    = [];
+
+// podium: only populated when the game ends.
+// podium[0] = 1st place (lowest score survivor), podium[1] = 2nd, podium[2] = 3rd ...
+let podium       = [];
+
+// ── localStorage keys ────────────────────────────────────────────────────────
+const LS_PLAYERS  = 'tst_players';
+const LS_SELECTED = 'tst_selected';
+const LS_GAME     = 'tst_game';
+const LS_HISTORY  = 'tst_history';
+
+// ── Persistence ──────────────────────────────────────────────────────────────
+function savePlayerList() {
+  localStorage.setItem(LS_PLAYERS,  JSON.stringify(playerList));
+  localStorage.setItem(LS_SELECTED, JSON.stringify([...selected]));
+}
+
+function saveGameState() {
+  if (!teams.length) { localStorage.removeItem(LS_GAME); return; }
+  localStorage.setItem(LS_GAME, JSON.stringify({
+    teams, target, round, scores,
+    eliminated:  [...eliminated],
+    rejoined:    [...rejoined],
+    elimOrder,
+    podium,
+    log, roundHistory,
+    gameOver: document.getElementById('winner-section').style.display !== 'none'
+  }));
+}
+
+function saveHistory() {
+  localStorage.setItem(LS_HISTORY, JSON.stringify(history));
+}
+
+function loadAll() {
+  const pl = localStorage.getItem(LS_PLAYERS);
+  playerList = pl ? JSON.parse(pl) : [...DEFAULT_PLAYERS];
+
+  const sel  = localStorage.getItem(LS_SELECTED);
+  selected   = sel ? new Set(JSON.parse(sel)) : new Set();
+
+  const hist = localStorage.getItem(LS_HISTORY);
+  history    = hist ? JSON.parse(hist) : [];
+
+  const gRaw = localStorage.getItem(LS_GAME);
+  if (gRaw) {
+    try {
+      const g      = JSON.parse(gRaw);
+      teams        = g.teams;
+      target       = g.target;
+      round        = g.round;
+      scores       = g.scores;
+      eliminated   = new Set(g.eliminated);
+      rejoined     = new Set(g.rejoined || []);
+      elimOrder    = g.elimOrder || [];
+      podium       = g.podium   || [];
+      log          = g.log;
+      roundHistory = g.roundHistory || [];
+      return true;
+    } catch(e) { localStorage.removeItem(LS_GAME); }
+  }
+  return false;
+}
+
+function pushSnapshot() {
+  roundHistory.push({
+    scores:    {...scores},
+    eliminated:[...eliminated],
+    rejoined:  [...rejoined],
+    elimOrder: [...elimOrder],
+    podium:    [...podium],
+    round,
+    log: [...log]
+  });
+}
+
+// ── Tab navigation ───────────────────────────────────────────────────────────
+function showTab(id, btn) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+  if (id === 'tab-history') renderHistory();
+}
+
+// ── Toast ────────────────────────────────────────────────────────────────────
+let toastTimer;
+function showToast(msg, color = 'var(--accent)') {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.style.borderColor = color; t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2600);
+}
+
+// ── Player pool (setup screen) ───────────────────────────────────────────────
+function renderPlayerPool() {
+  const pool = document.getElementById('player-pool');
+  pool.innerHTML = '';
+  playerList.forEach(name => {
+    const tag = document.createElement('div');
+    tag.className = 'player-tag' + (selected.has(name) ? ' selected' : '');
+    const ns = document.createElement('span');
+    ns.textContent = name; ns.style.pointerEvents = 'none';
+    tag.appendChild(ns);
+    if (selected.has(name)) {
+      const rm = document.createElement('span');
+      rm.className = 'remove'; rm.textContent = '✕'; rm.style.pointerEvents = 'none';
+      tag.appendChild(rm);
+    }
+    const del = document.createElement('button');
+    del.className = 'delete-btn'; del.textContent = '×'; del.title = `Remove ${name}`;
+    del.onclick = e => {
+      e.stopPropagation();
+      if (confirm(`Remove "${name}" from the player list?`)) {
+        playerList = playerList.filter(p => p !== name);
+        selected.delete(name); savePlayerList(); renderPlayerPool();
+      }
+    };
+    tag.appendChild(del);
+    tag.onclick = () => togglePlayer(name);
+    pool.appendChild(tag);
+  });
+  const c = selected.size;
+  document.getElementById('sel-count').textContent = `${c} player${c !== 1 ? 's' : ''} selected (min 2)`;
+}
+
+function togglePlayer(name) {
+  if (selected.has(name)) selected.delete(name); else selected.add(name);
+  savePlayerList(); renderPlayerPool();
+}
+function selectAll() { playerList.forEach(n => selected.add(n)); savePlayerList(); renderPlayerPool(); }
+function clearAll()  { selected.clear(); savePlayerList(); renderPlayerPool(); }
+
+function addNewPlayer() {
+  const input = document.getElementById('new-player-input');
+  const name  = input.value.trim();
+  if (!name) { input.focus(); return; }
+  if (playerList.map(p => p.toLowerCase()).includes(name.toLowerCase())) {
+    alert(`"${name}" is already in the list`); return;
+  }
+  if (playerList.length >= 30) { alert('Maximum 30 players allowed'); return; }
+  playerList.push(name); selected.add(name);
+  input.value = ''; input.focus();
+  savePlayerList(); renderPlayerPool();
+}
+
+document.getElementById('target').onchange = function () {
+  document.getElementById('custom-wrap').style.display = this.value === 'custom' ? 'block' : 'none';
+};
+
+// ── Game start / reset ───────────────────────────────────────────────────────
+function startGame() {
+  if (selected.size < 2) { alert('Select at least 2 players'); return; }
+  teams  = playerList.filter(n => selected.has(n));
+  const sel = document.getElementById('target').value;
+  target = sel === 'custom'
+    ? parseInt(document.getElementById('custom-target').value) || 150
+    : parseInt(sel);
+  scores = {}; teams.forEach(t => scores[t] = 0);
+  eliminated = new Set(); rejoined = new Set();
+  elimOrder = []; podium = [];
+  round = 1; log = []; roundHistory = [];
+  showGame(); saveGameState();
+}
+
+function showGame() {
+  document.getElementById('setup').style.display          = 'none';
+  document.getElementById('game').style.display           = 'block';
+  document.getElementById('winner-section').style.display = 'none';
+  document.getElementById('round-section').style.display  = 'block';
+  document.getElementById('target-display').textContent   = target;
+  document.getElementById('round-num').textContent        = round;
+  updateUndoBtn(); renderScoreboard(); renderEliminatedPanel(); renderRoundInputs(); renderLog();
+}
+
+function resetGame() {
+  if (teams.length && !confirm('Abandon this game and go back to setup?')) return;
+  localStorage.removeItem(LS_GAME);
+  teams = []; eliminated = new Set(); rejoined = new Set();
+  elimOrder = []; podium = [];
+  round = 1; log = []; scores = {}; roundHistory = [];
+  document.getElementById('setup').style.display       = 'block';
+  document.getElementById('game').style.display        = 'none';
+  document.getElementById('elim-section').style.display = 'none';
+  renderPlayerPool();
+}
+
+// ── Scoreboard helpers ───────────────────────────────────────────────────────
+function getSortedTeams() { return [...teams].sort((a,b) => scores[a] - scores[b]); }
+function getLeader() {
+  const active = teams.filter(t => !eliminated.has(t));
+  if (!active.length) return null;
+  return active.reduce((a,b) => scores[a] <= scores[b] ? a : b);
+}
+function getHighestActiveScore() {
+  const active = teams.filter(t => !eliminated.has(t));
+  return active.length ? Math.max(...active.map(t => scores[t])) : 0;
+}
+
+// Returns podium position (1-based) only after game over; null during play.
+function getPodiumPos(name) {
+  const gameOver = document.getElementById('winner-section').style.display !== 'none';
+  if (!gameOver) return null;
+  const i = podium.indexOf(name);
+  return i >= 0 ? i + 1 : null;
+}
+
+// ── Scoreboard render ────────────────────────────────────────────────────────
+function renderScoreboard() {
+  const c      = document.getElementById('score-cards');
+  const sorted = getSortedTeams();
+  const leader = getLeader();
+  const n      = teams.length;
+  const cols   = n <= 3 ? n : n <= 6 ? 3 : 4;
+  c.style.gridTemplateColumns = `repeat(${cols},1fr)`;
+  c.innerHTML = '';
+
+  sorted.forEach((t, idx) => {
+    const s          = scores[t];
+    const pct        = Math.min(100, Math.round(s / target * 100));
+    const isElim     = eliminated.has(t);
+    const isRejoined = rejoined.has(t) && !isElim;
+    const isLead     = t === leader && !isElim;
+    const pos        = getPodiumPos(t);  // null during game, 1/2/3/... after
+
+    const barColor = isElim ? '#2a2d3a' : pct >= 80 ? '#f06060' : pct >= 50 ? '#f0b060' : '#60c8f0';
+
+    let cardClass = '';
+    if      (pos === 1)   cardClass = ' pos-1st';
+    else if (pos === 2)   cardClass = ' pos-2nd';
+    else if (pos === 3)   cardClass = ' pos-3rd';
+    else if (isElim)      cardClass = ' elim-card-style';
+    else if (isRejoined)  cardClass = ' rejoined';
+    else if (isLead)      cardClass = ' lead';
+
+    let scoreColor = 'var(--text)';
+    if      (pos === 1)   scoreColor = 'var(--gold)';
+    else if (pos === 2)   scoreColor = 'var(--silver)';
+    else if (pos === 3)   scoreColor = 'var(--bronze)';
+    else if (isElim)      scoreColor = 'var(--muted)';
+    else if (isRejoined)  scoreColor = 'var(--rejoin)';
+    else if (isLead)      scoreColor = 'var(--lead)';
+    else if (pct >= 80)   scoreColor = 'var(--elim)';
+
+    let badge = '';
+    if      (pos === 1)   badge = '<span class="badge badge-1st">🥇 1st Place</span>';
+    else if (pos === 2)   badge = '<span class="badge badge-2nd">🥈 2nd Place</span>';
+    else if (pos === 3)   badge = '<span class="badge badge-3rd">🥉 3rd Place</span>';
+    else if (isElim)      badge = '<span class="badge badge-elim">✕ out</span>';
+    else if (isRejoined)  badge = '<span class="badge badge-rejoin">↩ rejoined</span>';
+    else if (isLead)      badge = '<span class="badge badge-lead">★ leading</span>';
+
+    const ribbon = pos === 1 ? '<div class="pos-ribbon">🥇</div>'
+                 : pos === 2 ? '<div class="pos-ribbon">🥈</div>'
+                 : pos === 3 ? '<div class="pos-ribbon">🥉</div>'
+                 : '';
+
+    c.innerHTML += `
+      <div class="score-card${cardClass}">
+        ${ribbon}
+        <div class="sc-rank">#${idx+1}</div>
+        <div class="sc-name">${t}</div>
+        <div class="sc-score" style="color:${scoreColor}">${s}</div>
+        ${badge}
+        <div class="sc-progress"><div class="sc-bar" style="width:${pct}%;background:${barColor}"></div></div>
+      </div>`;
+  });
+}
+
+// ── Eliminated / Rejoin panel ────────────────────────────────────────────────
+// Shows all players in `eliminated` set — they can all rejoin.
+// This is intentionally separate from elimOrder/podium.
+function renderEliminatedPanel() {
+  const sec     = document.getElementById('elim-section');
+  const cardsEl = document.getElementById('elim-cards');
+  const elimList = [...eliminated];
+
+  if (!elimList.length) { sec.style.display = 'none'; return; }
+  sec.style.display = 'block';
+  cardsEl.innerHTML = '';
+
+  const rejoinScore = getHighestActiveScore() + 1;
+
+  elimList.forEach(name => {
+    const card = document.createElement('div');
+    card.className = 'elim-card';
+    card.innerHTML = `
+      <div class="ec-name">${name}</div>
+      <div class="ec-score">Out at: ${scores[name]} pts</div>
+      <div class="ec-rejoin-score">↩ Rejoin at: <strong>${rejoinScore} pts</strong></div>
+    `;
+    const btn = document.createElement('button');
+    btn.className   = 'rejoin-btn';
+    btn.textContent = '↩ Rejoin Game';
+    btn.onclick     = () => rejoinPlayer(name, rejoinScore);
+    card.appendChild(btn);
+    cardsEl.appendChild(card);
+  });
+}
+
+// ── Rejoin ───────────────────────────────────────────────────────────────────
+function rejoinPlayer(name, rejoinScore) {
+  if (!eliminated.has(name)) return;
+  if (!confirm(`Rejoin "${name}" at ${rejoinScore} points?`)) return;
+
+  pushSnapshot();
+
+  // Remove from eliminated and elimOrder (they're back in the game)
+  eliminated.delete(name);
+  elimOrder = elimOrder.filter(n => n !== name);
+  rejoined.add(name);
+  scores[name] = rejoinScore;
+
+  log.unshift(
+    `<div class="log-row"><span style="color:var(--rejoin)">↩ REJOIN</span> &nbsp;` +
+    `<strong>${name}</strong> rejoins at <span style="color:var(--rejoin);font-weight:700">${rejoinScore} pts</span></div>`
+  );
+
+  renderLog(); renderScoreboard(); renderEliminatedPanel(); renderRoundInputs(); updateUndoBtn();
+  saveGameState();
+  showToast(`↩ ${name} rejoined at ${rejoinScore} pts`, 'var(--rejoin)');
+}
+
+// ── Round inputs ─────────────────────────────────────────────────────────────
+function renderRoundInputs() {
+  const active       = teams.filter(t => !eliminated.has(t));
+  const sortedActive = [...active].sort((a,b) => scores[a] - scores[b]);
+  const c    = document.getElementById('round-inputs');
+  const cols = active.length <= 3 ? active.length : active.length <= 8 ? 3 : 4;
+  c.style.gridTemplateColumns = `repeat(${Math.max(1, cols)},1fr)`;
+  c.innerHTML = '';
+  sortedActive.forEach(t => {
+    c.innerHTML += `
+      <div class="round-cell">
+        <label>${t} · ${scores[t]} pts${rejoined.has(t) ? ' ↩' : ''}</label>
+        <input type="number" id="inp-${t.replace(/[^a-zA-Z0-9]/g,'_')}" min="0" max="999" placeholder="0">
+      </div>`;
+  });
+}
+
+function renderLog() { document.getElementById('log').innerHTML = log.join(''); }
+function updateUndoBtn() { document.getElementById('undo-btn').disabled = roundHistory.length === 0; }
+
+// ── Submit round ─────────────────────────────────────────────────────────────
+//
+// POSITION LOGIC (lowest score = best):
+//   - The LAST player(s) still active when the game ends = WINNERS.
+//     Among survivors: lowest score = 1st, next = 2nd, etc.
+//   - Eliminated players rank BELOW survivors.
+//     Among eliminated: last to be knocked out = best rank (they lasted longer).
+//     Within the same round: lower score at elimination = better rank.
+//
+// elimOrder[] tracks knockouts chronologically:
+//   elimOrder[0]    = first player ever knocked out  → LAST place
+//   elimOrder[last] = most recently knocked out      → best loser
+//
+// When the game ends, finishGame() builds podium[]:
+//   podium = [survivors sorted lowest→highest score, ...elimOrder reversed]
+//   podium[0] = 1st place, podium[1] = 2nd, podium[2] = 3rd ...
+
+function submitRound() {
+  const active = teams.filter(t => !eliminated.has(t));
+  if (!active.length) return;
+
+  const pts = {};
+  for (const t of active) {
+    const id  = 'inp-' + t.replace(/[^a-zA-Z0-9]/g,'_');
+    const val = parseInt(document.getElementById(id)?.value) || 0;
+    if (val < 0) { alert(`Points for "${t}" must be 0 or more`); return; }
+    pts[t] = val;
+  }
+
+  pushSnapshot();
+
+  let roundLog  = `<span style="color:var(--accent2)">R${round}</span> &nbsp;`;
+  const newElim = [];
+
+  active.forEach(t => {
+    scores[t] += pts[t];
+    roundLog  += `${t} <span style="color:var(--accent)">+${pts[t]}</span>→<strong style="color:var(--text)">${scores[t]}</strong> &nbsp;`;
+    if (scores[t] >= target) {
+      eliminated.add(t);
+      rejoined.delete(t);
+      newElim.push(t);
+    }
+  });
+
+  // Sort this round's new eliminees: lower score = better rank = added to elimOrder later
+  // (elimOrder[last] = best loser, so within this round the lowest-score player goes last)
+  newElim.sort((a,b) => scores[b] - scores[a]); // highest score first → pushed first → sits earlier in array = worse rank
+  newElim.forEach(n => elimOrder.push(n));
+
+  if (newElim.length) roundLog += `<span style="color:var(--elim)"> | Out: ${newElim.join(', ')}</span>`;
+  log.unshift(`<div class="log-row">${roundLog}</div>`);
+  renderLog();
+  document.getElementById('round-num').textContent = ++round;
+  renderScoreboard(); renderEliminatedPanel(); updateUndoBtn();
+
+  const remaining = teams.filter(t => !eliminated.has(t));
+  if (remaining.length <= 1) {
+    finishGame(remaining);
+  } else {
+    renderRoundInputs(); saveGameState();
+  }
+}
+
+// ── finishGame: build final podium and show banner ───────────────────────────
+function finishGame(remaining) {
+  // Survivors sorted lowest→highest score (lowest = 1st place)
+  const survivors = [...remaining].sort((a,b) => scores[a] - scores[b]);
+
+  // elimOrder[0] = first knocked out (worst), elimOrder[last] = last knocked out (best loser)
+  // Reversing gives: [best loser, ..., worst] — these come AFTER survivors in podium
+  const losers = [...elimOrder].reverse();
+
+  // podium[0]=1st, podium[1]=2nd, podium[2]=3rd, ...
+  podium = [...survivors, ...losers];
+
+  renderScoreboard();
+  renderPodiumBanner();
+  document.getElementById('round-section').style.display  = 'none';
+  document.getElementById('winner-section').style.display = 'block';
+  document.getElementById('elim-section').style.display   = 'none';
+  saveGameState();
+
+  // Save to history
+  const entry = {
+    id: Date.now(),
+    date: new Date().toLocaleString(),
+    podium: podium.slice(0,3).map(n => ({ name: n, score: scores[n] })),
+    players: teams.length,
+    rounds: round - 1,
+    target,
+    finalScores: teams.map(t => ({ name: t, score: scores[t] })).sort((a,b) => a.score - b.score)
+  };
+  history.unshift(entry);
+  if (history.length > 50) history.pop();
+  saveHistory();
+}
+
+// ── Podium banner ────────────────────────────────────────────────────────────
+function renderPodiumBanner() {
+  const row  = document.getElementById('podium-row');
+  const rest = document.getElementById('podium-rest');
+  row.innerHTML = '';
+
+  const medals  = ['🥇','🥈','🥉'];
+  const labels  = ['1st Place','2nd Place','3rd Place'];
+  const classes = ['p1','p2','p3'];
+
+  // Visual order: 2nd (left), 1st (centre / raised), 3rd (right)
+  [1,0,2].forEach(i => {
+    if (i >= podium.length) return;
+    const card = document.createElement('div');
+    card.className = `podium-card ${classes[i]}`;
+    card.innerHTML = `
+      <div class="podium-medal">${medals[i]}</div>
+      <div class="podium-pos">${labels[i]}</div>
+      <div class="podium-name">${podium[i]}</div>
+      <div class="podium-score">${scores[podium[i]]} pts</div>`;
+    row.appendChild(card);
+  });
+
+  if (podium.length > 3) {
+    rest.innerHTML =
+      `<div class="podium-rest-title">Other finishers</div>
+       <div class="podium-rest-list">
+         ${podium.slice(3).map((n,i) =>
+           `<span class="podium-rest-item">#${i+4} ${n} · ${scores[n]}pts</span>`).join('')}
+       </div>`;
+  } else {
+    rest.innerHTML = '';
+  }
+}
+
+// ── Undo ─────────────────────────────────────────────────────────────────────
+function undoRound() {
+  if (!roundHistory.length) return;
+  const snap   = roundHistory.pop();
+  scores       = snap.scores;
+  eliminated   = new Set(snap.eliminated);
+  rejoined     = new Set(snap.rejoined || []);
+  elimOrder    = snap.elimOrder || [];
+  podium       = snap.podium   || [];
+  round        = snap.round;
+  log          = snap.log;
+  document.getElementById('winner-section').style.display = 'none';
+  document.getElementById('round-section').style.display  = 'block';
+  document.getElementById('round-num').textContent = round;
+  renderScoreboard(); renderEliminatedPanel(); renderRoundInputs(); renderLog(); updateUndoBtn();
+  saveGameState();
+  showToast('↩ Last action undone', '#f0b060');
+}
+
+// ── Edit modal ───────────────────────────────────────────────────────────────
+function openEditModal() {
+  const grid = document.getElementById('edit-grid');
+  grid.innerHTML = '';
+  teams.forEach(t => {
+    const pos   = getPodiumPos(t);
+    const tag   = pos === 1 ? ' 🥇' : pos === 2 ? ' 🥈' : pos === 3 ? ' 🥉'
+                : eliminated.has(t) ? ' ✕' : rejoined.has(t) ? ' ↩' : '';
+    grid.innerHTML += `
+      <div class="score-edit-row">
+        <label>${t}${tag}</label>
+        <input type="number" id="edit-${t.replace(/[^a-zA-Z0-9]/g,'_')}" min="0" max="9999" value="${scores[t]}">
+      </div>`;
+  });
+  document.getElementById('edit-modal').classList.add('open');
+}
+function closeEditModal() { document.getElementById('edit-modal').classList.remove('open'); }
+
+function saveEditModal() {
+  pushSnapshot();
+  teams.forEach(t => {
+    const id  = 'edit-' + t.replace(/[^a-zA-Z0-9]/g,'_');
+    const val = parseInt(document.getElementById(id)?.value);
+    if (!isNaN(val) && val >= 0) scores[t] = val;
+  });
+  // Recompute eliminations from scores
+  eliminated = new Set();
+  teams.forEach(t => {
+    if (scores[t] >= target) { eliminated.add(t); rejoined.delete(t); }
+  });
+  closeEditModal();
+  renderScoreboard(); renderEliminatedPanel(); renderRoundInputs(); updateUndoBtn();
+  saveGameState();
+  showToast('✏️ Scores updated', 'var(--accent)');
+}
+
+document.getElementById('edit-modal').addEventListener('click', function(e) {
+  if (e.target === this) closeEditModal();
+});
+
+// ── History tab ──────────────────────────────────────────────────────────────
+function renderHistory() {
+  const container = document.getElementById('history-list');
+  if (!history.length) {
+    container.innerHTML = '<p style="color:var(--muted);font-size:13px">No completed games yet.</p>';
+    return;
+  }
+  container.innerHTML = history.map((g,i) => {
+    const p = g.podium || [];
+    const podiumHtml = p.map((pl, pi) => {
+      const cls = ['hp1','hp2','hp3'][pi] || '';
+      const med = ['🥇','🥈','🥉'][pi]   || `#${pi+1}`;
+      return `<span class="history-podium-item ${cls}">${med} ${pl.name} · ${pl.score}pts</span>`;
+    }).join('');
+    return `
+    <div class="history-card" onclick="toggleHistoryDetail(${i})">
+      <div class="hc-top">
+        <span class="hc-winner">🥇 ${p[0]?.name || 'Unknown'}</span>
+        <span class="hc-date">${g.date}</span>
+      </div>
+      <div class="hc-meta">${g.players} players · ${g.rounds} rounds · Target ${g.target}</div>
+      <div class="history-detail" id="hd-${i}">
+        <div class="history-podium">${podiumHtml}</div>
+        <div class="history-scores-title">All final scores (lowest = best):</div>
+        <div class="hd-scores">
+          ${(g.finalScores||[]).map(fs =>
+            `<span class="hd-score-item">${fs.name}: ${fs.score}</span>`).join('')}
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+function toggleHistoryDetail(i) { document.getElementById('hd-'+i).classList.toggle('open'); }
+function clearHistory() {
+  if (!history.length) return;
+  if (!confirm('Clear all game history?')) return;
+  history = []; saveHistory(); renderHistory();
+  showToast('History cleared', 'var(--danger)');
+}
+
+// ── Init ─────────────────────────────────────────────────────────────────────
+function init() {
+  const hasGame = loadAll();
+  renderHistory();
+
+  if (hasGame && teams.length) {
+    document.getElementById('setup').style.display = 'none';
+    document.getElementById('game').style.display  = 'block';
+    document.getElementById('target-display').textContent = target;
+    document.getElementById('round-num').textContent      = round;
+    updateUndoBtn(); renderScoreboard(); renderEliminatedPanel(); renderLog();
+
+    const g = JSON.parse(localStorage.getItem(LS_GAME));
+    if (g.gameOver) {
+      document.getElementById('round-section').style.display  = 'none';
+      document.getElementById('winner-section').style.display = 'block';
+      document.getElementById('elim-section').style.display   = 'none';
+      renderPodiumBanner();
+    } else {
+      document.getElementById('winner-section').style.display = 'none';
+      document.getElementById('round-section').style.display  = 'block';
+      renderRoundInputs();
+    }
+    showToast('Game restored ✓', 'var(--accent2)');
+  } else {
+    document.getElementById('setup').style.display = 'block';
+    document.getElementById('game').style.display  = 'none';
+    renderPlayerPool();
+  }
+}
+
+init();
+</script>
+</body>
+</html>
